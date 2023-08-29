@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="top_icon">
+            <i class="fa-solid fa-chevron-down"></i>
+            <span>Now Playing</span>
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="img_container">
+            <img src="/image/kesariya.jpg" alt="">
+
+        </div>
+        <div class="next_pic">
+            <div class="first_button"></div>
+            <div class="second_button"></div>
+        </div>
+        <div class="music_container">
+            <div id="title">
+                Kesariya
+            </div>
+            <div class="artist">
+                <i class="fa-solid fa-heart"></i>
+                <span id="artist">Arjit Singh</span>
+                <i class="fa-solid fa-share-nodes"></i>
+            </div>
+
+        </div>
+
+
+        <div>
+            <audio src="/music/kesariya.mp3"></audio>
+        </div>
+        <!-- music controls -->
+        <div class="music_controls">
+
+           <i class="fa-solid fa-repeat" title="repeat" id="repeat"></i>
+            <i class="fa-solid fa-backward-step" title="Prev" id="prev"></i>
+            <i class="fa-solid fa-play main_button" title="Play" id="play"></i>
+            <i class="fa-solid fa-forward-step" title="Next" id="next"></i>
+            <i class="fa-solid fa-headphones" title="List" id="list"></i>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const title = document.getElementById("title");
+        const artist = document.getElementById("artist");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        const songs = [
+        {
+            name: "Kesariya",
+            title:"Kesariya",
+            artist: "Arjit Singh"
+        },
+          
+        {
+        name: "bedardiya",
+        title: "Bedardiya",
+        artist:"Pritam Singh"
+        },
+        {
+            name: "phli",
+            title: "Phli Mohabbat",
+            artist: "Pritam Singh",
+        },{
+            name: "yaar",
+            title: "Tera Yaar Hoon",
+            artist: "Amit Trivadi",
+
+        },
+        {
+            name: "Apna Bana Le",
+            title: "Apna Bana Le",
+            artist: "Mohit Chauhan"
+        },
+        {
+            name: "Tere Hawaale",
+            title: "Tere Hawaale",
+            artist: "Lalit Singh",
+        }
+
+    ]
+    let isPlaying = false;
+    function playMusic() {
+        isPlaying = true;
+        music.play();
+        // play.classList.replace("fa-circle-play", "fa-pause");
+        play.classList.replace("fa-play", "fa-pause");
+
+    };
+    function pauseMusic(){
+        isPlaying = false;
+        music.pause();
+        play.classList.replace("fa-pause", "fa-play");
+    };
+    play.addEventListener("click", () =>{
+        if(isPlaying){
+            pauseMusic();
+        }
+        else{
+            playMusic();
+        }
+    });
+
+
+    //changing the data of title and artist.
+    function loadSong(songs){
+        title.textContent = songs.title;
+        artist.textContent = songs.artist;
+        music.src = "/music/" + songs.name + ".mp3";
+        img.src = "/image/" + songs.name + ".jpg";
+    };
+    songIndex = 0;
+    function nextSong(){
+        songIndex = (songIndex + 1) % songs.length;
+        loadSong(songs[songIndex]);
+        playMusic();
+    };
+    function prevSong(){
+        songIndex = (songIndex - 1 + songs.length) % songs.length;
+        loadSong(songs[songIndex]);
+        playMusic();
+    }
+
+    next.addEventListener("click", nextSong);
+    prev.addEventListener("click", prevSong);
+
+
+    </script>
+</body>
+
+</html>
